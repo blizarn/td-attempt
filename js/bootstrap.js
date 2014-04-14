@@ -28,22 +28,27 @@ var draw = function() {
 	ctx.fillStyle = "#FF0000";
 	ctx.fillRect(-20, -20, 20, 20);
 	ctx.restore();
-	loop();
+	loopBegin();
 };
 
-var box = new rectangle(0, canvas.height/2, 32, 32, 1, 0);
+var circle1 = null;
+var loopBegin = function() {
+	circle1 = new circle((map1.path[0][0]-1)*32, (map1.path[0][1]-1)*32, 16, map1.path);
+	loop();
+};
+//var box = new rectangle(0, canvas.height/2, 32, 32, 1, 0);
 var loop = function() {
 	//ctx.clearRect(0, 0, canvas.width, canvas.height);
-	if (box.x > canvas.width) {
-		box.x = 0;
+	if (circle1.destroy === true) {
+		circle1 = new circle((map1.path[0][0]-1)*32, (map1.path[0][1]-1)*32, 16, map1.path);
 	}
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	box.update();
-	box.draw(ctx);
+	circle1.update();
+	circle1.draw(ctx);
 	window.requestAnimationFrame(loop);
 };
 
-draw();
 var map1 = new map();
 mapCtx = document.getElementById('map').getContext('2d');
 renderMap(mapCtx, map1);
+draw();
