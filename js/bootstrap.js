@@ -1,18 +1,3 @@
-/*window.onload = window.onresize = function() {
-   var canvas = document.getElementById('canvas-container');
-   var viewportWidth = window.innerWidth;
-   var viewportHeight = window.innerHeight;
-   var canvasWidth = 640;
-   var canvasHeight = 480;
-
-   canvas.style.position = "absolute";
-   canvas.style.left = (viewportWidth - canvasWidth)/2 + "px";
-   canvas.setAttribute("height", canvasHeight);
-   canvas.style.top = (viewportHeight - canvasHeight) / 2 + "px";
-   canvas.style.left = (viewportWidth - canvasWidth) / 2 + "px";
-   draw();
-};*/
-
 var canvas,        // the visible canvas element    
     ctx,       // the 2d context of `canvas`
     currentScreen; // the currently rendered screen for the game
@@ -46,14 +31,14 @@ var loop = function() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < 10; i++) {
 		if (circle1[i] === undefined && index > 33) {
-			circle1[i] = new circle((map1.path[0][0]-1)*32, (map1.path[0][1]-1)*32, 16, map1.path);
+			circle1[i] = new circle(map1.path[0][0]*32, map1.path[0][1]*32, 16, map1.path);
 			index = 0;
 		} else if (circle1[i] !== undefined){
 			if (circle1[i].destroy === false) {
 				circle1[i].update();
 				circle1[i].draw(ctx);
 			} else if (index > 33) {
-				circle1[i] = new circle((map1.path[0][0]-1)*32, (map1.path[0][1]-1)*32, 16, map1.path);
+				circle1[i] = new circle(map1.path[0][0]*32, map1.path[0][1]*32, 16, map1.path);
 				index = 0;
 			}
 		}
