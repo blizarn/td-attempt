@@ -1,23 +1,16 @@
-var rectangle = function(x, y, width, height, velX, velY) {
+var rectangle = function(x, y, width, height) {
 	this.x = x;
 	this.y = y;
-	this.velX = velX;
-	this.velY = velY;
-	this.shape = 0;
 	this.width = width;
 	this.height = height;
 	this.draw = function() {
 		ctx.save();
-		ctx.translate(this.x, this.y);
+		ctx.translate(this.x*32, this.y*32);
 		ctx.fillStyle = "#FF0000";
-		ctx.fillRect(this.width/-2, this.height/-2, this.width, this.height);
+		ctx.fillRect(-1, -1, this.width, this.height);
 		ctx.restore();
 	};
-	this.update = function(canvas) {
-		this.x += this.velX;
-		this.y += this.velY;
-	};
-	this.moveTo = function(x, y) {
+	this.update = function(x, y) {
 		this.x = x;
 		this.y = y;
 	};

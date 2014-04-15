@@ -3,28 +3,28 @@
  */
 var renderMap = function(ctx, mapObj) {
 	ctx.clearRect(0, 0, 480, 480);
-	var length = 31;
+	var length = 32;
 	for (y in mapObj.mapData) {
 		for (x in mapObj.mapData[y]) {
 			if (mapObj.mapData[y][x] === 1) {
 				ctx.save();
 				ctx.translate(x*32, y*32);
 				ctx.fillStyle = '#458B00';
-				ctx.fillRect(1, 1, length, length);
+				ctx.fillRect(0, 0, length, length);
 				ctx.restore();
 				//console.log(x + ',' + y);
 			} else if (mapObj.mapData[y][x] === 0) {
 				ctx.save();
 				ctx.translate(x*32, y*32);
 				ctx.fillStyle = '#000000';
-				ctx.fillRect(1, 1, length, length);
+				ctx.strokeRect(0, 0, length, length);
 				ctx.restore();
 				//console.log(x + ',' + y);
 			} else {
 				ctx.save();
 				ctx.translate(x*32, y*32);
 				ctx.fillStyle = '#3B5323';
-				ctx.fillRect(1, 1, length, length);
+				ctx.fillRect(0, 0, length, length);
 				ctx.restore();
 				//console.log(x + ',' + y);
 			}

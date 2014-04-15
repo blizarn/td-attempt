@@ -4,12 +4,16 @@ var circle = function(x, y, radius, path) {
 	this.radius = radius;
 	this.path = path;
 	this.index = 0;
+	this.destroy = false;
 	this.velocity = 2;
 	this.draw = function() {
 		ctx.save();
 		ctx.translate(this.x, this.y);
 		ctx.fillStyle = "#FF0000";
-		ctx.fillRect(0, 0, 31, 31);
+		ctx.beginPath();
+		ctx.arc(this.radius-1, this.radius-1, this.radius, 0, Math.PI*2, true);
+		ctx.closePath();
+		ctx.fill();
 		ctx.restore();
 	};
 	this.update = function(canvas) {
