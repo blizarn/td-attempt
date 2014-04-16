@@ -52,11 +52,17 @@ var cursor = new rectangle(-32, -32, 32, 32);
 canvas.onmousemove = function(e) {
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
+	var tileX = Math.floor(mouseX/32);
+	var tileY = Math.floor(mouseY/32);
 	//console.log(Math.floor(mouseX/32) + ', ' + Math.floor(mouseY/32));
 	if (mouseX < 480 && mouseY < 480) {
-		cursor.update(Math.floor(mouseX/32), Math.floor(mouseY/32));
+		if (map1.mapData[tileY][tileX] === 0) {
+			cursor.update(Math.floor(mouseX/32), Math.floor(mouseY/32), 'blue');
+		} else {
+			cursor.update(Math.floor(mouseX/32), Math.floor(mouseY/32), 'red');
+		}
 	} else {
-		cursor.update(-16, -16);
+		cursor.update(-16, -16, 'red');
 	}
 };
 
