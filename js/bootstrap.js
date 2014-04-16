@@ -1,10 +1,11 @@
+"use strict";
 var canvas,        // the visible canvas element    
     ctx,       // the 2d context of `canvas`
     currentScreen; // the currently rendered screen for the game
 //Map variables
 var map1 = new map();
-mapCanvas = document.getElementById('map');
-mapCtx = mapCanvas.getContext('2d');
+var mapCanvas = document.getElementById('map');
+var mapCtx = mapCanvas.getContext('2d');
 renderMap(mapCtx, map1);
  
 canvas = document.getElementById("board");
@@ -23,6 +24,7 @@ var draw = function() {
 };
 
 var circle1 = [];
+var towers = [];
 var loopBegin = function() {
 	loop();
 };
@@ -42,6 +44,10 @@ var loop = function() {
 				index = 0;
 			}
 		}
+	}
+	for (i in towers) {
+		towers[i].update(circle1);
+		towers[i].draw(ctx);
 	}
 	index++;
 	cursor.draw(ctx);
@@ -75,7 +81,10 @@ canvas.onclick = function(e) {
 		console.log(tileX + ', ' + tileY);
 		if (map1.mapSubData[tileY][tileX] === 0) {
 			console.log(true);
+			map1.mapSubData[tileY][tileX] = -1;
+			towers.push(new tower(tileX, tileY));
 		}
 	}
+	//console.log(e);
 };
 draw();

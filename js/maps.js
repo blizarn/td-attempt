@@ -1,11 +1,12 @@
+"use strict";
 /**
  * @author Morgan
  */
 var renderMap = function(ctx, mapObj) {
 	ctx.clearRect(0, 0, 480, 480);
 	var length = 32;
-	for (y in mapObj.mapData) {
-		for (x in mapObj.mapData[y]) {
+	for (var y in mapObj.mapData) {
+		for (var x in mapObj.mapData[y]) {
 			if (mapObj.mapData[y][x] === 1) {
 				ctx.save();
 				ctx.translate(x*32, y*32);

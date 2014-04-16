@@ -1,11 +1,13 @@
+"use strict";
 var circle = function(x, y, radius, path) {
 	this.x = x;
 	this.y = y;
+	this.health = 10;
 	this.radius = radius;
 	this.path = path;
 	this.index = 0;
 	this.destroy = false;
-	this.velocity = 1.2;
+	this.velocity = 1;
 	this.draw = function() {
 		ctx.save();
 		ctx.translate(this.x, this.y);
@@ -51,6 +53,17 @@ var circle = function(x, y, radius, path) {
 					}
 				}
 			}
+		}
+	};
+	
+	this.takeDamage = function(damage) {
+		if (this.health - damage <= 0) {
+			this.health = 0;
+			this.destroy = true;
+			return true;
+		} else {
+			this.health -= damage;
+			return false;
 		}
 	};
 };
