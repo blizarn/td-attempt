@@ -53,8 +53,23 @@ canvas.onmousemove = function(e) {
 	var mouseX = e.offsetX;
 	var mouseY = e.offsetY;
 	//console.log(Math.floor(mouseX/32) + ', ' + Math.floor(mouseY/32));
-	if (mouseX <= 479) {
+	if (mouseX < 480 && mouseY < 480) {
 		cursor.update(Math.floor(mouseX/32), Math.floor(mouseY/32));
+	} else {
+		cursor.update(-16, -16);
+	}
+};
+
+canvas.onclick = function(e) {
+	var mouseX = e.offsetX;
+	var mouseY = e.offsetY;
+	var tileX = Math.floor(mouseX/32);
+	var tileY = Math.floor(mouseY/32);
+	if (mouseX < 480 && mouseY < 480) {
+		console.log(tileX + ', ' + tileY);
+		if (map1.mapSubData[tileY][tileX] === 0) {
+			console.log(true);
+		}
 	}
 };
 draw();
