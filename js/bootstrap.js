@@ -46,8 +46,13 @@ var loop = function() {
 		}
 	}
 	for (i in towers) {
-		towers[i].update(circle1);
-		towers[i].draw(ctx);
+		var y = towers[i][0];
+		var x = towers[i][1];
+		map1.mapSubData[y][x].update(circle1);
+		map1.mapSubData[y][x].draw(ctx);
+		if (cursor.y === y && cursor.x === x) {
+			map1.mapSubData[y][x].renderRange(ctx);
+		}
 	}
 	index++;
 	cursor.draw(ctx);
@@ -60,7 +65,6 @@ canvas.onmousemove = function(e) {
 	var mouseY = e.offsetY;
 	var tileX = Math.floor(mouseX/32);
 	var tileY = Math.floor(mouseY/32);
-	//console.log(Math.floor(mouseX/32) + ', ' + Math.floor(mouseY/32));
 	if (mouseX < 480 && mouseY < 480) {
 		if (map1.mapData[tileY][tileX] === 0) {
 			cursor.update(Math.floor(mouseX/32), Math.floor(mouseY/32), 'blue');
@@ -79,12 +83,19 @@ canvas.onclick = function(e) {
 	var tileY = Math.floor(mouseY/32);
 	if (mouseX < 480 && mouseY < 480) {
 		console.log(tileX + ', ' + tileY);
-		if (map1.mapSubData[tileY][tileX] === 0) {
+		if (map1.mapSubData[tileY][tileX] === 0 && e.button === 0) {
 			console.log(true);
-			map1.mapSubData[tileY][tileX] = -1;
-			towers.push(new tower(tileX, tileY));
+			map1.mapSubData[tileY][tileX] = (new tower(tileX, tileY));
+			towers.push([tileY, tileX]);
+		} else if (map1.mapSubData[tileY][tileX] !== typeof 0 && e.button === 2) {
+			map1.mapSubData[tileY][tileX] = 0;
+			towers = towers.filter(towersFilter);
 		}
 	}
-	//console.log(e);
+};
+
+canvas.oncontextmenu = function(e) {
+	canvas.onclick(e);
+	return false;
 };
 draw();

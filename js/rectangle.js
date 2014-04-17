@@ -20,6 +20,12 @@ var rectangle = function(x, y, width, height) {
 	};
 };
 
+var towersFilter = function(obj) {
+	if (map1.mapSubData[obj[0]][obj[1]] !== 0) {
+		return obj;
+	}
+};
+
 var tower = function(tileX, tileY) {
 	this.x = tileX*32 + 16;
 	this.y = tileY*32 + 16;
@@ -29,6 +35,15 @@ var tower = function(tileX, tileY) {
 	this.damagePerShot = 4;
 	this.target = null;
 	this.orientation = 0;
+	this.findNewTarget = function(entList) {
+		var closest = Infinity;
+		for (var i in entList) {
+			var distance = distanceForm(this.x, this.y, entList[i].x+16, entList[i].y+16);
+			if (distance < closest && distance <= this.range) {
+				this.target = entList[i];
+			}
+		}
+	};
 	this.draw = function(ctx) {
 		var side = 32;
 		var h = 32 * (Math.sqrt(3)/2);
@@ -48,26 +63,31 @@ var tower = function(tileX, tileY) {
     	ctx.closePath();
 		ctx.restore();
 	};
+	this.renderRange = function(ctx) {
+		ctx.save();
+		ctx.translate(this.x, this.y);
+		ctx.fillStyle = "#FF0000";
+		ctx.globalAlpha = 0.5;
+		ctx.beginPath();
+		ctx.arc(0, 0, this.range, 0, Math.PI*2, true);
+		ctx.closePath();
+		ctx.fill();
+		ctx.restore();
+	};
 	this.update = function(entList) {
-		if (this.target === null) {
-			var closest = Infinity;
-			for (var i in entList) {
-				var distance = distanceForm(this.x, this.y, entList[i].x+16, entList[i].y+16);
-				if (distance < closest && distance <= this.range) {
-					this.target = entList[i];
-				}
-			}
-		} else if (this.target.health <= 0 || distanceForm(this.x, this.y, this.target.x, this.target.y) > this.range) {
-			this.target = null;
-		} else {
-			this.timeSinceLastShot++;
+		this.timeSinceLastShot++;
+		if (this.target !== null) {
 			if (this.timeSinceLastShot >= this.fireRate) {
 				this.target.takeDamage(1);
 				this.timeSinceLastShot = 0;
 			}
-		}
-		if (this.target !== null) {
 			this.orientation = (Math.atan2(this.target.x+16 - this.x, this.target.y+16 - this.y)+Math.PI);
+			if (this.target.health <= 0 || distanceForm(this.x, this.y, this.target.x, this.target.y) > this.range) {
+				this.target = null;
+			}
+		}
+		if (this.target === null) {
+			this.findNewTarget(entList);
 		}
 	};
 };
