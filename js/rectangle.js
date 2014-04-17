@@ -29,6 +29,8 @@ var towersFilter = function(obj) {
 var tower = function(tileX, tileY) {
 	this.x = tileX*32 + 16;
 	this.y = tileY*32 + 16;
+	this.tileX = tileX;
+	this.tileY = tileY;
 	this.range = 64;
 	this.fireRate = 10;
 	this.timeSinceLastShot = 0;
@@ -66,8 +68,8 @@ var tower = function(tileX, tileY) {
 	this.renderRange = function(ctx) {
 		ctx.save();
 		ctx.translate(this.x, this.y);
-		ctx.fillStyle = "#FF0000";
-		ctx.globalAlpha = 0.5;
+		ctx.fillStyle = "#4B0082";
+		ctx.globalAlpha = 0.3;
 		ctx.beginPath();
 		ctx.arc(0, 0, this.range, 0, Math.PI*2, true);
 		ctx.closePath();

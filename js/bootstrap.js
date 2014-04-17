@@ -28,6 +28,7 @@ var towers = [];
 var loopBegin = function() {
 	loop();
 };
+var towerSelection = null;
 var index = 0;
 var loop = function() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -48,11 +49,11 @@ var loop = function() {
 	for (i in towers) {
 		var y = towers[i][0];
 		var x = towers[i][1];
-		map1.mapSubData[y][x].update(circle1);
-		map1.mapSubData[y][x].draw(ctx);
-		if (cursor.y === y && cursor.x === x) {
-			map1.mapSubData[y][x].renderRange(ctx);
-		}
+		map1.mapData[y][x].update(circle1);
+		map1.mapData[y][x].draw(ctx);
+	}
+	if (towerSelection !== null) {
+		towerSelection.renderRange(ctx);
 	}
 	index++;
 	cursor.draw(ctx);
@@ -83,13 +84,23 @@ canvas.onclick = function(e) {
 	var tileY = Math.floor(mouseY/32);
 	if (mouseX < 480 && mouseY < 480) {
 		console.log(tileX + ', ' + tileY);
-		if (map1.mapSubData[tileY][tileX] === 0 && e.button === 0) {
-			console.log(true);
-			map1.mapSubData[tileY][tileX] = (new tower(tileX, tileY));
-			towers.push([tileY, tileX]);
-		} else if (map1.mapSubData[tileY][tileX] !== typeof 0 && e.button === 2) {
-			map1.mapSubData[tileY][tileX] = 0;
-			towers = towers.filter(towersFilter);
+		if (e.button === 0) {
+			if (map1.mapData[tileY][tileX] === 0) {
+				console.log(true);
+				map1.mapData[tileY][tileX] = (new tower(tileX, tileY));
+				towers.push([tileY, tileX]);
+			} else if (map1.mapData[tileY][tileX] !== typeof 0) {
+				if (map1.mapData[tileY][tileX] !== towerSelection) {
+					towerSelection = map1.mapData[tileY][tileX];
+				} else {
+					towerSelection = null;
+				}
+			}
+		} else if (e.button === 2) {
+			if (map1.mapData[tileY][tileX] !== typeof 0) {
+				map1.mapData[tileY][tileX] = 0;
+				towers = towers.filter(towersFilter);
+			}
 		}
 	}
 };
