@@ -80,10 +80,8 @@ canvas.onclick = function(e) {
 	var tileX = Math.floor(mouseX/32);
 	var tileY = Math.floor(mouseY/32);
 	if (mouseX < 480 && mouseY < 480) {
-		console.log(tileX + ', ' + tileY);
 		if (e.button === 0) {
 			if (map1.mapData[tileY][tileX] === 0) {
-				console.log(true);
 				map1.mapData[tileY][tileX] = (new tower(tileX, tileY));
 				towers.push([tileY, tileX]);
 			} else if (map1.mapData[tileY][tileX] !== typeof 0) {
