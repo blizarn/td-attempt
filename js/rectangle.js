@@ -10,7 +10,7 @@ var rectangle = function(x, y, width, height) {
 		ctx.globalAlpha = 0.5;
 		ctx.translate(this.x*32, this.y*32);
 		ctx.fillStyle = this.color;
-		ctx.fillRect(-1, -1, this.width, this.height);
+		ctx.fillRect(0, 0, this.width, this.height);
 		ctx.restore();
 	};
 	this.update = function(x, y, color) {
