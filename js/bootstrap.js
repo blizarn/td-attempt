@@ -59,7 +59,7 @@ var loop = function() {
 
 var cursor = new rectangle(-32, -32, 32, 32);
 canvas.onmousemove = function(e) {
-	var mouseX = e.offsetX;
+	var mouseX = e.offsetX - 2;
 	var mouseY = e.offsetY;
 	var tileX = Math.floor(mouseX/32);
 	var tileY = Math.floor(mouseY/32);
