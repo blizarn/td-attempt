@@ -21,7 +21,7 @@ var rectangle = function(x, y, width, height) {
 };
 
 var towersFilter = function(obj) {
-	if (map1.mapSubData[obj[0]][obj[1]] !== 0) {
+	if (map1.mapData[obj[0]][obj[1]] !== 0) {
 		return obj;
 	}
 };
