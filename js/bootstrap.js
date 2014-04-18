@@ -98,6 +98,9 @@ canvas.onclick = function(e) {
 			}
 		} else if (e.button === 2) {
 			if (map1.mapData[tileY][tileX] !== typeof 0) {
+				if (map1.mapData[tileY][tileX] === towerSelection) {
+					towerSelection = null;
+				}
 				map1.mapData[tileY][tileX] = 0;
 				towers = towers.filter(towersFilter);
 			}
