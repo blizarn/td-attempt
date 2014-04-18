@@ -1,4 +1,11 @@
 "use strict";
+
+var entFilter = function(ent) {
+	if (ent.destroy === false) {
+		return ent;
+	}
+};
+
 var circle = function(x, y, radius, path) {
 	this.x = x;
 	this.y = y;

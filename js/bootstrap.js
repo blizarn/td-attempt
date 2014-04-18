@@ -23,7 +23,7 @@ var draw = function() {
 	loopBegin();
 };
 
-var circle1 = [];
+var entList = [];
 var towers = [];
 var loopBegin = function() {
 	loop();
@@ -31,30 +31,27 @@ var loopBegin = function() {
 var towerSelection = null;
 var index = 0;
 var loop = function() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	for (var i = 0; i < 10; i++) {
-		if (circle1[i] === undefined && index > 33) {
-			circle1[i] = new circle(map1.path[0][0]*32, map1.path[0][1]*32, 16, map1.path);
-			index = 0;
-		} else if (circle1[i] !== undefined){
-			if (circle1[i].destroy === false) {
-				circle1[i].update();
-				circle1[i].draw(ctx);
-			} else if (index > 33) {
-				circle1[i] = new circle(map1.path[0][0]*32, map1.path[0][1]*32, 16, map1.path);
-				index = 0;
-			}
+	ctx.clearRect(0, 0, canvas.width, canvas.width);
+	for (var i = 0; i < entList.length; i++) {
+		if (entList[i].destroy === false) {
+			entList[i].update();
+			entList[i].draw(ctx);
 		}
+	}
+	if (index > 33) {
+		entList.push(new circle(map1.path[0][0]*32, map1.path[0][1]*32, 16, map1.path));
+		index = 0;
 	}
 	for (i in towers) {
 		var y = towers[i][0];
 		var x = towers[i][1];
-		map1.mapData[y][x].update(circle1);
+		map1.mapData[y][x].update(entList);
 		map1.mapData[y][x].draw(ctx);
 	}
 	if (towerSelection !== null) {
 		towerSelection.renderRange(ctx);
 	}
+	entList.filter(entFilter);
 	index++;
 	cursor.draw(ctx);
 	window.requestAnimationFrame(loop);
