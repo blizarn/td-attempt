@@ -51,7 +51,9 @@ var loop = function() {
 	if (towerSelection !== null) {
 		towerSelection.renderRange(ctx);
 	}
-	entList.filter(entFilter);
+	var tEntList = entList.filter(entFilter);
+	entList = tEntList;
+	tEntList = null;
 	index++;
 	cursor.draw(ctx);
 	window.requestAnimationFrame(loop);
